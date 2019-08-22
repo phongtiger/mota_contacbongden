@@ -8,34 +8,53 @@
 
 </body>
 <script>
-    let ElectricLam = function () {
+    let ElectricLamp = function () {
         this.status = false;
-        this.shine = function (conect) {
-            if(this.status && conect){
-                document.write(" I am Shining"+"<br/>");
-            }
+        this.conectSwitch = false;
+        this.getStatus = function () {
+            return this.status;
+        };
+        this.getConectSwitch = function () {
+            return this.conectSwitch;
+        };
+        this.setConectSwitch = function (b) {
+            this.conectSwitch = b;
         }
     };
     let SwitchButton = function () {
         this.status = false;
-        this.connect = false;
+        this.connectLamp = false;
+        this.getStatus = function () {
+            return this.status;
+        };
+        this.setconnectToLamp =function (a) {
+            this.connectLamp = a;
+        };
         this.switchOn= function (bongden) {
-            this.status = true;
-            bongden.status = true;
+            if(bongden.getConectSwitch()){
+                this.status = true;
+                bongden.status = true;
+            }
         };
-        this.switchOff = function () {
+        this.switchOff = function (bongden) {
             this.status = false;
+            bongden.status = false;
         };
-        this.connectToLamp =function () {
-            this.connect = true;
-        }
+
     };
-    let bongDen1 = new ElectricLam();
+    let bongDen1 = new ElectricLamp();
     let congtac1 = new SwitchButton();
-    for(let i = 0; i<10; i++){
-        congtac1.connectToLamp();
+    let demdenbat = 0;
+    let demdentat = 0;
+    bongDen1.setConectSwitch(true);
+    congtac1.setconnectToLamp(true);
+    for(let i =0; i<10;i++){
         congtac1.switchOn(bongDen1);
-        bongDen1.shine(congtac1.connect);
+        if(bongDen1.getStatus()){demdenbat++;}
+        congtac1.switchOff(bongDen1);
+        if (bongDen1.getStatus()){}else {demdentat++;}
     }
+    console.log(demdentat);
+    console.log(demdenbat);
 </script>
 </html>
